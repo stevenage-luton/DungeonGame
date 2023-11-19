@@ -7,6 +7,8 @@ void Player::InitializeStats()
 	stamina = Dice::Roll2D6(12);
 	luck = Dice::RollD6(6);
 
+	supplies = 10;
+
 	originalSkill = skill;
 	originalStamina = stamina;
 	originalLuck = luck;
@@ -52,6 +54,11 @@ void Player::eatSupplies() {
 	{
 		supplies--;
 		stamina += 4;
+		if (stamina > originalStamina)
+		{
+			cout << "You're pretty full. You wasted some healing." << endl;
+			stamina = originalStamina;
+		}
 	}
 	else
 	{
