@@ -1,11 +1,25 @@
 // Dungeon Game.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+#include "Dice.h"
+#include "Player.h"
+#include "Game.h"
 
 #include <iostream>
+#include <time.h>
+
+Player* player1;
+Game* game;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+
+
+ 
+
+    game = new Game;
+
+    game->InitializeRooms();
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
