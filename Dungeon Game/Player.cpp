@@ -90,20 +90,23 @@ void Player::givePotion(string type) {
 }
 
 void Player::drinkPotion(string type) {
-	if (type == "skill" && skillPotion < 0)
+	if (type == "skill" && skillPotion > 0)
 	{
 		skill = originalSkill;
 		skillPotion--;
+		cout << "You take a drink from your Skill Potion!" << endl;
 	}
-	else if (type == "stamina" && stamPotion < 0)
+	else if (type == "stamina" && stamPotion > 0)
 	{
 		stamina = originalStamina;
 		stamPotion--;
+		cout << "You take a drink from your Stamina Potion!" << endl;
 	}
-	else if (type == "luck" && luckPotion < 0)
+	else if (type == "luck" && luckPotion > 0)
 	{
 		luck = originalLuck;
 		luckPotion--;
+		cout << "You take a drink from your Luck Potion!" << endl;
 	}
 	else
 	{
