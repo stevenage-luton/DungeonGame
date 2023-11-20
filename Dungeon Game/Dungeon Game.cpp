@@ -13,16 +13,17 @@ int main()
 {
 	Game* game;
 
- 
-
     game = new Game;
 
-    game->InitializeRooms();
 
-	////debug. Check if player was initialized properly and we can access everything
-	//cout << game->player1->getSkill() << endl;
-	//cout << game->player1->getStamina() << endl;
-	//cout << game->player1->getLuck() << endl;
+
+    game->InitializeRooms();
+	game->StartGame();
+	//debug. Check if player was initialized properly and we can access everything
+	cout << game->player1->getSkill() << endl;
+	cout << game->player1->getStamina() << endl;
+	cout << game->player1->getLuck() << endl;
+	cout << game->player1->getSupplies() << endl;
 
 	while (game->gamePlaying)
 	{

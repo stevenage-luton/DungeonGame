@@ -4,6 +4,7 @@
 #include "Dice.h"
 #include "Player.h"
 #include <stdlib.h>
+#include <fstream>
 
 
 class Game {
@@ -11,6 +12,7 @@ public:
 	Game() : currentRoom(nullptr), player1(nullptr) {}
 	Room* currentRoom;
 	Player* player1;
+	vector<Room*> rooms;
 	bool gamePlaying = true;
 	void ChangeRoom(Room* room) {
 		system("cls");
@@ -38,7 +40,11 @@ public:
 		room2->South = room1;
 		room2->roomMonster = goblin;
 
-		ChangeRoom(room1);
+		rooms.push_back(room1);
+		rooms.push_back(room2);
+
+
+		//ChangeRoom(room1);
 
 	}
 	void CombatEncounter(Player* player, Monster* monster) {
@@ -211,7 +217,109 @@ public:
 		else if (strInput == "eat")
 		{
 			player1->eatSupplies();
-		}		
+		}
+		else if (strInput == "save" || strInput == "save game")
+		{
+			ofstream SaveFile("saveFile.txt");
+			if (SaveFile.fail())
+			{
+				cout << "Unable to Create File." << endl;
+			}
+			else
+			{
+
+				SaveFile << "currentroom:" << currentRoom->getTitle() << endl;
+				SaveFile << "originalLuck:" << player1->getOriginalLuck() << endl;
+				SaveFile << "originalStamina:" << player1->getOriginalStamina() << endl;
+				SaveFile << "originalSkill:" << player1->getOriginalSkill() << endl;
+				SaveFile << "luck:" << player1->getLuck() << endl;
+				SaveFile << "stamina:" << player1->getStamina() << endl;
+				SaveFile << "skill:" << player1->getSkill() << endl;
+				SaveFile << "luckPotion:" << player1->getLuckPotion() << endl;
+				SaveFile << "staminaPotion:" << player1->getStamPotion() << endl;
+				SaveFile << "skillPotion:" << player1->getSkillPotion() << endl;
+				SaveFile << "supplies:" << player1->getSupplies() << endl;
+
+				SaveFile.close();
+				cout << "Saved Game!" << endl;
+			}
+		}
+
 		
+	}
+	void StartGame() {
+		srand(time(NULL));
+
+		string input;
+
+		while (input != "new" && input != "new game" && input != "load" && input != "load game")
+		{
+			cout << "Would you like to start a New Game, or Load a previous game?" << endl;
+			input = HandleInput();
+		}
+		if (input == "load" || input == "load game")
+		{
+			LoadGame();
+		}
+		else
+		{
+			player1 = new Player;
+			string startingPotion;
+
+			while (startingPotion != "skill" && startingPotion != "stamina" && startingPotion != "luck")
+			{
+				cout << "Which starting potion would you like? Skill, Luck, Stamina?" << endl;
+				startingPotion = HandleInput();
+				cout << endl;
+			}
+			player1->givePotion(startingPotion);
+			ChangeRoom(*(rooms.begin()));
+		}
+
+		
+	}
+	void LoadGame() {
+		ifstream SaveFile("saveFile.txt");
+		vector<string> fileContents;
+		string tempString;
+		if (SaveFile.is_open())
+		{
+			while (getline(SaveFile, tempString))
+			{
+				fileContents.push_back(tempString);
+			}
+		}
+		else
+		{
+			cout << "Unable to open file." << endl;
+			return;
+		}
+		string delimiter = ":";
+		if (!fileContents.front().empty())
+		{
+			string savedRoom = fileContents.front();
+			string temp = savedRoom.substr(0, savedRoom.find(delimiter));
+			string data = savedRoom.substr(savedRoom.find(delimiter) + 1, savedRoom.length());
+			if (temp == "currentroom")
+			{
+				for (Room* room : rooms) {
+					if (room->getTitle() == data)
+					{
+						ChangeRoom(room);
+					}
+				}
+			}
+			else
+			{
+				cout << "Temp wasn't currentroom for some reason." << endl;
+			}
+			player1 = new Player(fileContents);
+		}
+		else
+		{
+			cout << "File loaded incorrectly." << endl;
+		}
+		
+
 	}
 };

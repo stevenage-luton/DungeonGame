@@ -17,6 +17,9 @@ public:
         cout << endl;
         cout << description << endl;
     }
+    string getTitle() {
+        return title;
+    }
     Room* North;
     Room* South;
     Room* East;

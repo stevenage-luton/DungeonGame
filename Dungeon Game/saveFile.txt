@@ -1,0 +1,11 @@
+currentroom:Room2
+originalLuck:8
+originalStamina:19
+originalSkill:7
+luck:6
+stamina:19
+skill:7
+luckPotion:0
+staminaPotion:0
+skillPotion:2
+supplies:6

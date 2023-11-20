@@ -12,6 +12,10 @@ void Player::InitializeStats()
 	originalSkill = skill;
 	originalStamina = stamina;
 	originalLuck = luck;
+
+	skillPotion = 0;
+	stamPotion = 0;
+	luckPotion = 0;
 }
 
 void Player::Health()
