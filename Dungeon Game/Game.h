@@ -26,6 +26,9 @@ public:
 		if (currentRoom->skillType != "" && !currentRoom->attempted)
 		{
 			cout << currentRoom->getPrompt() << endl;
+		}if (currentRoom->getTitle() == "WinRoom")
+		{
+			gamePlaying = false;
 		}
 		//cout << "What do you want to do?" << endl;
 		//ProcessInput(HandleInput());
@@ -88,6 +91,14 @@ public:
 
 		rooms.push_back(room1);
 		rooms.push_back(room2);
+		rooms.push_back(room3);
+		rooms.push_back(room4);
+		rooms.push_back(room5);
+		rooms.push_back(room6);
+		rooms.push_back(room7);
+		rooms.push_back(room8);
+		rooms.push_back(room9);
+		rooms.push_back(room10);
 
 
 		//ChangeRoom(room1);
@@ -448,8 +459,9 @@ public:
 			}
 			else if (currentRoom->getRewardType() == "victory")
 			{
-				Room* room11 = new Room("WinRoom", "The room is light. You can see an entrance to the south.", nullptr, nullptr, nullptr, nullptr, nullptr, NULL, "", "", "", "", "");
+				Room* room11 = new Room("WinRoom", "You put the trophy in the door, open it, and step out into bright sunlight.\n\nWell done! You beat the game!", nullptr, nullptr, nullptr, nullptr, nullptr, NULL, "", "", "", "", "");
 				currentRoom->East = room11;
+				rooms.push_back(room11);
 			}
 		}
 		else
@@ -481,6 +493,11 @@ public:
 					cout << "You died." << endl;
 					gamePlaying = false;
 				}
+			}
+			else if (currentRoom->getRewardType() == "victory")
+			{
+				cout << "You died." << endl;
+				gamePlaying = false;
 			}
 		}
 	}
